@@ -1,3 +1,9 @@
+/* ========= MODO OSCURO CACHE ========= */
+if (localStorage.getItem("modoOscuro") === "true") {
+  document.body.classList.add("oscuro");
+}
+
+/* ========= VARIABLES GLOBALES ========= */
 let banco = [];
 let examen = [];
 let indice = 0;
@@ -216,7 +222,10 @@ function reiniciarExamen() {
 
 function toggleModo() {
   document.body.classList.toggle("oscuro");
+  localStorage.setItem("modoOscuro",
+    document.body.classList.contains("oscuro"));
 }
+
 
 function volverMenu() {
   detenerTemporizador();
