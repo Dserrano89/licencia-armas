@@ -205,3 +205,46 @@ body.oscuro #vistaHistorico {
 #vistaHistorico h2 {
   margin-top: 0;
 }
+
+/* ===== RESPONSIVE MÓVIL ===== */
+@media (max-width: 600px) {
+
+  #menu {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  #menu button,
+  #menu select {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 14px;
+  }
+
+  #panel {
+    margin: 10px;
+    padding: 18px;
+  }
+
+  #opciones .opcion {
+    font-size: 1.05rem;
+    padding: 16px;
+  }
+
+  #siguiente,
+  #reiniciar {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #barra {
+    height: 10px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+    padding: 14px;
+  }
+}
