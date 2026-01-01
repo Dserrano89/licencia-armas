@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador Licencia de Armas D / E</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- IMPORTANTE: defer -->
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+
+  <h1>Simulador Licencia de Armas D / E</h1>
+
+  <!-- ===== MENÚ PRINCIPAL ===== -->
+  <div id="menu">
+    <button onclick="toggleModo()">🌙 Modo oscuro</button>
+    <button id="btnExamen" onclick="iniciarExamen()">Examen real (20 preguntas)</button>
+    <button id="btnFalladas" onclick="iniciarFalladas()">Repasar falladas</button>
+    <button onclick="mostrarHistorico()">Ver histórico</button>
+
+
+    <select id="temaSelect">
+      <option value="">Tema concreto</option>
+      <option value="I">Tema I</option>
+      <option value="II">Tema II</option>
+      <option value="III">Tema III</option>
+      <option value="IV">Tema IV</option>
+      <option value="V">Tema V</option>
+      <option value="VI">Tema VI</option>
+      <option value="VII">Tema VII</option>
+    </select>
+
+    <button id="btnTema" onclick="iniciarPorTema()">Empezar tema</button>
+  </div>
+
+  <hr>
+
+  <!-- ===== PANEL DE EXAMEN ===== -->
+  <div id="panel" style="display:none">
+
+    <div id="contador"></div>
+
+    <div id="barra">
+      <div id="progreso"></div>
+    </div>
+
+    <div id="temporizador"></div>
+    <div id="tema"></div>
+
+    <div id="enunciado"></div>
+
+    <div id="opciones"></div>
+
+    <div id="resultado"></div>
+
+    <button id="siguiente">Siguiente</button>
+    <button id="reiniciar" onclick="reiniciarExamen()">Reiniciar examen</button>
+    <button onclick="volverMenu()">Volver al menú</button>
+
+  </div>
+
+  <hr>
+
+<!-- ===== VISTA HISTÓRICO ===== -->
+<div id="vistaHistorico" style="display:none">
+
+  <h2>Histórico de resultados</h2>
+
+  <ul id="historico"></ul>
+
+  <button onclick="volverMenu()">Volver al menú</button>
+
+</div>
+
+
+</body>
+</html>
