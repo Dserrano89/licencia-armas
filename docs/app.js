@@ -371,3 +371,5 @@ function repasarEnquistadas() {
   modoActual = "falladas"; // sin aprobado/suspenso
   arrancar(false);
 }
+
+
