@@ -14,6 +14,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Licencia Armas D/E">
 
+
+
   <!-- IMPORTANTE: defer -->
   <script src="app.js" defer></script>
 </head>
@@ -23,13 +25,18 @@
   <h1>Simulador Licencia de Armas D / E</h1>
 
   <!-- ===== MENÚ PRINCIPAL ===== -->
-  <div id="menu">
-    <button onclick="toggleModo()">🌙 Modo oscuro</button>
-    <button id="btnExamen" onclick="iniciarExamen()">Examen real (20 preguntas)</button>
-    <button id="btnFalladas" onclick="iniciarFalladas()">Repasar falladas</button>
+<div id="menu">
+
+  <!-- BLOQUE PRINCIPAL -->
+  <div class="menu-bloque">
+    <button onclick="iniciarExamen()">Examen real</button>
+    <button onclick="iniciarFalladas()">Repasar falladas</button>
     <button onclick="mostrarHistorico()">Ver histórico</button>
+    <button onclick="mostrarStats()">Estadísticas</button>
+  </div>
 
-
+  <!-- BLOQUE TEMAS -->
+  <div class="menu-bloque">
     <select id="temaSelect">
       <option value="">Tema concreto</option>
       <option value="I">Tema I</option>
@@ -41,10 +48,16 @@
       <option value="VII">Tema VII</option>
     </select>
 
-    <button id="btnTema" onclick="iniciarPorTema()">Empezar tema</button>
+    <button onclick="iniciarPorTema()">Empezar tema</button>
   </div>
 
-  <hr>
+  <!-- BLOQUE INFERIOR -->
+  <div class="menu-inferior">
+    <button id="btnModo" onclick="toggleModo()">🌙 Modo oscuro</button>
+  </div>
+
+</div>
+
 
   <!-- ===== PANEL DE EXAMEN ===== -->
   <div id="panel" style="display:none">
@@ -63,6 +76,8 @@
     <div id="opciones"></div>
 
     <div id="resultado"></div>
+
+    <div id="aviso" style="display:none; font-weight:bold; color:#b91c1c; margin:8px 0;"></div>
 
     <button id="siguiente">Siguiente</button>
     <button id="reiniciar" onclick="reiniciarExamen()">Reiniciar examen</button>
@@ -83,7 +98,13 @@
 
 </div>
 
+<!-- ===== VISTA ESTADÍSTICAS ===== -->
+ <div id="vistaStats" style="display:none">
+  <h2>Estadísticas</h2>
+  <div id="statsResumen"></div>
+  <button onclick="repasarEnquistadas()">Repasar enquistadas</button>
+  <button onclick="volverMenu()">Volver al menú</button>
+</div>
 
 </body>
 </html>
-

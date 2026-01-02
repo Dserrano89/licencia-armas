@@ -1,6 +1,7 @@
 /* ========= MODO OSCURO CACHE ========= */
 if (localStorage.getItem("modoOscuro") === "true") {
   document.body.classList.add("oscuro");
+  document.addEventListener("DOMContentLoaded", actualizarBotonModo);
 }
 
 /* ========= VARIABLES GLOBALES ========= */
@@ -11,6 +12,10 @@ let seleccionActual = null;
 let aciertos = 0;
 let falladas = [];
 let corregida = false;
+// "examen" | "falladas" | "tema"
+let modoActual = null; 
+
+
 
 let tiempo = 20 * 60; // 20 minutos
 let timer = null;
@@ -25,9 +30,19 @@ fetch("preguntas.json")
 /* ========= MODOS ========= */
 
 function iniciarExamen() {
+  modoActual = "examen";
+
+  // generar examen real con distribución oficial
   examen = generarExamen();
-  arrancar();
+
+  document.getElementById("vistaStats").style.display = "none";
+  document.getElementById("vistaHistorico").style.display = "none";
   document.getElementById("menu").style.display = "none";
+  document.getElementById("panel").style.display = "block";
+  document.getElementById("temporizador").style.display = "block";
+
+  // ARRANQUE REAL CON TIEMPO
+  arrancar(true);
 }
 
 function iniciarFalladas() {
@@ -35,6 +50,7 @@ function iniciarFalladas() {
     alert("No hay preguntas falladas todavía");
     return;
   }
+  modoActual = "falladas";
   examen = [...falladas];
   arrancar(false);
 }
@@ -55,6 +71,7 @@ function arrancar(conTiempo = true) {
   indice = 0;
   aciertos = 0;
   falladas = [];
+  document.getElementById("vistaStats").style.display = "none";
   document.getElementById("vistaHistorico").style.display = "none";
   document.getElementById("menu").style.display = "none";
   document.getElementById("panel").style.display = "block";
@@ -93,6 +110,20 @@ function mostrarPregunta() {
   document.getElementById("progreso").style.width =
   ((indice) / examen.length * 100) + "%";
 
+// aviso enquistada
+const stats = loadStats();
+const s = stats[qKey(p)];
+const aviso = document.getElementById("aviso");
+if (aviso) {
+  if (s && isEnquistada(s)) {
+    aviso.style.display = "block";
+    aviso.innerText = "⚠️ Esta pregunta se te resiste. Repásala.";
+  } else {
+    aviso.style.display = "none";
+  }
+}
+
+
 }
 
 function seleccionar(div) {
@@ -130,16 +161,17 @@ document.getElementById("siguiente").onclick = () => {
 
 function finalizar() {
   detenerTemporizador();
+
+  if (modoActual === "falladas") {
+    alert(`Repaso terminado. Aciertos: ${aciertos}/${examen.length}`);
+    return;
+  }
+
   const aprobado = aciertos > 16;
   guardarHistorico(aprobado);
-  alert(
-    `Resultado: ${aciertos}/${examen.length}\n` +
-    (aprobado ? "APROBADO" : "NO APROBADO")
-  );
-
-  document.getElementById("progreso").style.width = "100%";
-
+  alert(`Resultado: ${aciertos}/${examen.length}\n` + (aprobado ? "APROBADO" : "NO APROBADO"));
 }
+
 
 /* ========= TEMPORIZADOR ========= */
 
@@ -220,10 +252,28 @@ function reiniciarExamen() {
   alert("Examen reiniciado. Puedes empezar uno nuevo.");
 }
 
+
+  // modo oscuro
 function toggleModo() {
-  document.body.classList.toggle("oscuro");
-  localStorage.setItem("modoOscuro",
-    document.body.classList.contains("oscuro"));
+  const oscuro = document.body.classList.toggle("oscuro");
+
+  localStorage.setItem("modoOscuro", oscuro);
+
+  actualizarBotonModo();
+}
+
+  // actualizar texto botón modo oscuro
+function actualizarBotonModo() {
+  const btn = document.getElementById("btnModo");
+  if (!btn) return;
+
+  const oscuro = document.body.classList.contains("oscuro");
+
+  if (oscuro) {
+    btn.textContent = "☀️ Modo claro";
+  } else {
+    btn.textContent = "🌙 Modo oscuro";
+  }
 }
 
 
@@ -232,6 +282,7 @@ function volverMenu() {
 
   document.getElementById("panel").style.display = "none";
   document.getElementById("vistaHistorico").style.display = "none";
+  document.getElementById("vistaStats").style.display = "none";
   document.getElementById("menu").style.display = "block";
 }
 
@@ -244,4 +295,79 @@ function mostrarHistorico() {
   document.getElementById("vistaHistorico").style.display = "block";
 
   cargarHistorico();
+}
+
+// === stats.js (puede ir dentro de app.js si prefieres) ===
+const STATS_KEY = "statsPreguntas_v1";
+
+function loadStats() {
+  return JSON.parse(localStorage.getItem(STATS_KEY) || "{}");
+}
+
+function saveStats(stats) {
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+}
+
+function qKey(p) {
+  return `${p.tema}-${p.numero}`;
+}
+
+function ensureQ(stats, p) {
+  const k = qKey(p);
+  if (!stats[k]) {
+    stats[k] = {
+      tema: p.tema,
+      numero: p.numero,
+      aciertos: 0,
+      fallos: 0,
+      rachaFallos: 0,
+      total: 0,
+      last: null // "A" | "F"
+    };
+  }
+  return stats[k];
+}
+
+s.total++;
+if (seleccionActual === p.correcta) {
+  s.aciertos++;
+  s.rachaFallos = 0;
+  s.last = "A";
+} else {
+  s.fallos++;
+  s.rachaFallos++;
+  s.last = "F";
+}
+
+saveStats(stats);
+
+
+// === marcar enquistadas ===
+function isEnquistada(s) {
+  if (s.total >= 5 && (s.fallos / s.total) >= 0.6) return true;
+  if (s.rachaFallos >= 3) return true;
+  return false;
+}
+
+function mostrarStats() {
+  const stats = loadStats();
+  let totalQ = 0, enq = 0;
+  for (const k in stats) {
+    totalQ++;
+    if (isEnquistada(stats[k])) enq++;
+  }
+  document.getElementById("statsResumen").innerText =
+    `Preguntas vistas: ${totalQ}\nEnquistadas: ${enq}`;
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("panel").style.display = "none";
+  document.getElementById("vistaStats").style.display = "block";
+}
+
+function repasarEnquistadas() {
+  const stats = loadStats();
+  const set = new Set(Object.keys(stats).filter(k => isEnquistada(stats[k])));
+  examen = banco.filter(p => set.has(qKey(p)));
+  if (!examen.length) return alert("No hay preguntas enquistadas.");
+  modoActual = "falladas"; // sin aprobado/suspenso
+  arrancar(false);
 }

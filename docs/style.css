@@ -248,3 +248,25 @@ body.oscuro #vistaHistorico {
     padding: 14px;
   }
 }
+
+/* ===== MENÚ ESTRUCTURADO ===== */
+
+.menu-bloque {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.menu-inferior {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+body.oscuro .menu-inferior {
+  border-top-color: #334155;
+}
