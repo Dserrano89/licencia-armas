@@ -1533,7 +1533,7 @@
         "B": "Siempre que el transporte se realice dentro de la provincia.",
         "C": "Si."
       },
-      "correcta": "C"
+      "correcta": "A"
     },
     {
       "tema": "III",
@@ -1555,7 +1555,7 @@
         "B": "No es necesario",
         "C": "Esta prohibido"
       },
-      "correcta": "A"
+      "correcta": "C"
     },
     {
       "tema": "III",
@@ -1577,7 +1577,7 @@
         "B": "Las de la 8ª categoría",
         "C": "Las dos anteriores son ciertas."
       },
-      "correcta": "C"
+      "correcta": "B"
     },
     {
       "tema": "III",
@@ -1588,7 +1588,7 @@
         "B": "Nunca",
         "C": "Si se trata de una carabina cuya energía cinética del proyectil en boca exceda de 24,2 Julios"
       },
-      "correcta": "C"
+      "correcta": "A"
     },
     {
       "tema": "III",
