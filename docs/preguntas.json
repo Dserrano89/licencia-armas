@@ -776,6 +776,17 @@
       },
       "correcta": "A"
     },
+      {
+      "tema": "II",
+      "numero": 1,
+      "enunciado": "La clasificación de un arma dentro de una categoría, se determina en base a:",
+      "opciones": {
+        "A": "Su grado de peligrosidad",
+        "B": "Sus características, destino o utilización y a veces por la licencia que la ampare.",
+        "C": "Ambas respuestas son correctas"
+      },
+      "correcta": "C"
+    },
     {
       "tema": "II",
       "numero": 2,
@@ -1357,7 +1368,7 @@
         "B": "No.",
         "C": "Está prohibido."
       },
-      "correcta": "C"
+      "correcta": "A"
     },
     {
       "tema": "II",
@@ -1368,7 +1379,7 @@
         "B": "No.",
         "C": "Está prohibido."
       },
-      "correcta": "C"
+      "correcta": "A"
     },
     {
       "tema": "II",
@@ -1533,7 +1544,7 @@
         "B": "Siempre que el transporte se realice dentro de la provincia.",
         "C": "Si."
       },
-      "correcta": "A"
+      "correcta": "C"
     },
     {
       "tema": "III",
@@ -1555,7 +1566,7 @@
         "B": "No es necesario",
         "C": "Esta prohibido"
       },
-      "correcta": "C"
+      "correcta": "A"
     },
     {
       "tema": "III",
@@ -1577,7 +1588,7 @@
         "B": "Las de la 8ª categoría",
         "C": "Las dos anteriores son ciertas."
       },
-      "correcta": "B"
+      "correcta": "C"
     },
     {
       "tema": "III",
@@ -1588,7 +1599,7 @@
         "B": "Nunca",
         "C": "Si se trata de una carabina cuya energía cinética del proyectil en boca exceda de 24,2 Julios"
       },
-      "correcta": "A"
+      "correcta": "C"
     },
     {
       "tema": "III",
@@ -4250,7 +4261,7 @@
         "B": "Las Armas que amparan dichas Guías",
         "C": "Licencia de caza"
       },
-      "correcta": "C"
+      "correcta": "B"
     },
     {
       "tema": "VI",
@@ -4675,13 +4686,13 @@
     "counts_por_tema": {
       "I": 68,
       "II": 66,
-      "III": 66,
+      "III": 67,
       "IV": 70,
       "V": 66,
       "VI": 64,
       "VII": 22
     },
-    "total_preguntas": 422,
+    "total_preguntas": 423,
     "descartadas": 0
   }
 }
